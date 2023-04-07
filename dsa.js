@@ -1391,135 +1391,305 @@
 
 //////////////////////////////////////////////////////Binary Search Trees (BST)////////////////////////////////////////////
 
+// class Node {
+//   constructor(value) {
+//     this.value = value
+//     this.right = null
+//     this.left = null
+//     this.count = 1
+//   }
+// }
+
+// class BinarySearchTree {
+//   constructor() {
+//     this.root = null
+//   }
+
+//   insert(value) {
+//     let newNode = new Node(value)
+//     if (this.root === null) {
+//       this.root = newNode
+//       return this
+//     }
+//     let current = this.root
+//     while (true) {
+//       if (value === current.value) {
+//         current.count++
+//         return 'Duplicate node'
+//       }
+//       if (value < current.value) {
+//         if (current.left === null) {
+//           current.left = newNode
+//           return this
+//         }
+//         current = current.left
+//       } else {
+//         if (current.right === null) {
+//           current.right = newNode
+//           return this
+//         }
+//         current = current.right
+//       }
+//     }
+//   }
+
+//   find(value) {
+//     if (this.root === null) return undefined
+//     let current = this.root
+//     let found = false
+//     while (current && !found) {
+//       if (value < current.value) current = current.left
+//       else if (value > current.value) current = current.right
+//       else found = true
+//     }
+//     if (!found) return undefined
+//     return current
+//   }
+
+// contains(value) {
+//   if (this.root === null) return false
+//   let current = this.root
+//   let found = false
+//   while (current && !found) {
+//     if (value < current.value) current = current.left
+//     else if (value > current.value) current = current.right
+//     else return true
+//   }
+//   return false
+// }
+
+//   BFS() {
+//     //breadth first search
+//     let node = this.root
+//     let visited = []
+//     let queue = []
+//     queue.push(node)
+//     while (queue.length) {
+//       node = queue.shift()
+//       visited.push(node.value)
+//       if (node.left) queue.push(node.left)
+//       if (node.right) queue.push(node.right)
+//     }
+//     return visited
+//   }
+
+//   DFS_preOrder() {
+//     let visited = []
+
+//     function traverse(node) {
+//       visited.push(node.value)
+//       if (node.left) traverse(node.left)
+//       if (node.right) traverse(node.right)
+//     }
+
+//     traverse(this.root) ///starts from root node,, can be changed this if you wanna start from some other node
+//     return visited
+//   }
+
+//   DFS_postOrder() {
+//     let visited = []
+
+//     function traverse(node) {
+//       if (node.left) traverse(node.left)
+//       if (node.right) traverse(node.right)
+//       visited.push(node.value)
+//     }
+
+//     traverse(this.root) ///starts from root node,, can be changed this if you wanna start from some other node
+//     return visited
+//   }
+
+//   DFS_inOrder() {
+//     let visited = []
+
+//     function traverse(node) {
+//       node.left && traverse(node.left)
+//       visited.push(node.value)
+//       node.right && traverse(node.right)
+//     }
+
+//     traverse(this.root) ///starts from root node,, can be changed this if you wanna start from some other node
+//     return visited
+//   }
+// }
+
+// let bst = new BinarySearchTree()
+// bst.insert(10)
+// bst.insert(6)
+// bst.insert(15)
+// bst.insert(3)
+// bst.insert(8)
+// bst.insert(20)
+
+// //console.log(bst)
+// console.log(bst.DFS_inOrder())
+
+////////////////////////////////////////////////////BinaryHeap////////////////////////////////////////////////////////////
+
+// class MaxBinaryHeap {
+//   constructor() {
+//     //this.values = [41, 39, 33, 18, 27, 12]
+//     this.values = []
+//   }
+
+//   insert(element) {
+//     this.values.push(element)
+//     this.bubbleUp()
+//     return this.values
+//   }
+
+//   bubbleUp() {
+//     let index = this.values.length - 1
+//     const element = this.values[index]
+
+//     while (index > 0) {
+//       let parentIndex = Math.floor((index - 1) / 2)
+//       let parent = this.values[parentIndex]
+
+//       if (element <= parent) break
+//       this.values[parentIndex] = element
+//       this.values[index] = parent
+//       index = parentIndex
+//     }
+//   }
+
+//   extractMax() {
+//     const max = this.values[0]
+//     const end = this.values.pop()
+//     if (this.values.length > 0) {
+//       this.values[0] = end
+//       this.sinkDown()
+//     }
+//     return max
+//   }
+
+//   sinkDown() {
+//     let idx = 0
+//     const length = this.values.length
+//     const element = this.values[0]
+
+//     while (true) {
+//       let leftChildIdx = 2 * idx + 1
+//       let rightChildIdx = 2 * idx + 2
+//       let leftChild, rightChild
+//       let swap = null
+
+// if (leftChildIdx < length) {
+//   leftChild = this.values[leftChildIdx]
+//   if (leftChild < element) swap = leftChildIdx
+// }
+
+// if (rightChildIdx < length) {
+//   rightChild = this.values[rightChildIdx]
+//   if (
+//     (swap === null && rightChild < element) ||
+//     (swap !== null && rightChild < leftChild)
+//   )
+//     swap = rightChildIdx
+// }
+
+//       if (swap === null) break
+//       this.values[idx] = this.values[swap]
+//       this.values[swap] = element
+// idx = swap
+//     }
+//   }
+// }
+
+// let heap = new MaxBinaryHeap()
+// heap.insert(41)
+// heap.insert(39)
+// heap.insert(33)
+// heap.insert(18)
+// heap.insert(27)
+// heap.insert(12)
+// heap.insert(55)
+
+// console.log(heap.extractMax())
+// console.log(heap.values)
+
+//////////////////////////////////////////////////Priority Queue///////////////////////////////////////////////////////////
 class Node {
-  constructor(value) {
-    this.value = value
-    this.right = null
-    this.left = null
-    this.count = 1
+  constructor(val, priority) {
+    this.val = val
+    this.priority = priority
   }
 }
-
-class BinarySearchTree {
+class PriorityQueue {
   constructor() {
-    this.root = null
+    this.values = []
   }
 
-  insert(value) {
-    let newNode = new Node(value)
-    if (this.root === null) {
-      this.root = newNode
-      return this
+  enqueue(val, priority) {
+    let newNode = new Node(val, priority)
+    this.values.push(newNode)
+    this.bubbleUp()
+  }
+
+  bubbleUp() {
+    let index = this.values.length - 1
+    const element = this.values[index]
+
+    while (index > 0) {
+      let parentIndex = Math.floor((index - 1) / 2)
+      let parent = this.values[parentIndex]
+
+      if (element.priority >= parent.priority) break
+      this.values[parentIndex] = element
+      this.values[index] = parent
+      index = parentIndex
     }
-    let current = this.root
+  }
+
+  dequeue() {
+    const min = this.values[0]
+    const end = this.values.pop()
+    if (this.values.length > 0) {
+      this.values[0] = end
+      this.sinkDown()
+    }
+    return min
+  }
+
+  sinkDown() {
+    let idx = 0
+    const length = this.values.length
+    const element = this.values[0]
+
     while (true) {
-      if (value === current.value) {
-        current.count++
-        return 'Duplicate node'
+      let leftChildIdx = 2 * idx + 1
+      let rightChildIdx = 2 * idx + 2
+      let leftChild, rightChild
+      let swap = null
+
+      if (leftChildIdx < length) {
+        leftChild = this.values[leftChildIdx]
+        if (leftChild.priority < element.priority) swap = leftChildIdx
       }
-      if (value < current.value) {
-        if (current.left === null) {
-          current.left = newNode
-          return this
-        }
-        current = current.left
-      } else {
-        if (current.right === null) {
-          current.right = newNode
-          return this
-        }
-        current = current.right
+
+      if (rightChildIdx < length) {
+        rightChild = this.values[rightChildIdx]
+        if (
+          (swap === null && rightChild.priority < element.priority) ||
+          (swap !== null && rightChild.priority < leftChild.priority)
+        )
+          swap = rightChildIdx
       }
+
+      if (swap === null) break
+      this.values[idx] = this.values[swap]
+      this.values[swap] = element
+      idx = swap
     }
-  }
-
-  find(value) {
-    if (this.root === null) return undefined
-    let current = this.root
-    let found = false
-    while (current && !found) {
-      if (value < current.value) current = current.left
-      else if (value > current.value) current = current.right
-      else found = true
-    }
-    if (!found) return undefined
-    return current
-  }
-
-  // contains(value) {
-  //   if (this.root === null) return false
-  //   let current = this.root
-  //   let found = false
-  //   while (current && !found) {
-  //     if (value < current.value) current = current.left
-  //     else if (value > current.value) current = current.right
-  //     else return true
-  //   }
-  //   return false
-  // }
-
-  BFS() {
-    //breadth first search
-    let node = this.root
-    let visited = []
-    let queue = []
-    queue.push(node)
-    while (queue.length) {
-      node = queue.shift()
-      visited.push(node.value)
-      if (node.left) queue.push(node.left)
-      if (node.right) queue.push(node.right)
-    }
-    return visited
-  }
-
-  DFS_preOrder() {
-    let visited = []
-
-    function traverse(node) {
-      visited.push(node.value)
-      if (node.left) traverse(node.left)
-      if (node.right) traverse(node.right)
-    }
-
-    traverse(this.root) ///starts from root node,, can be changed this if you wanna start from some other node
-    return visited
-  }
-
-  DFS_postOrder() {
-    let visited = []
-
-    function traverse(node) {
-      if (node.left) traverse(node.left)
-      if (node.right) traverse(node.right)
-      visited.push(node.value)
-    }
-
-    traverse(this.root) ///starts from root node,, can be changed this if you wanna start from some other node
-    return visited
-  }
-
-  DFS_inOrder() {
-    let visited = []
-
-    function traverse(node) {
-      node.left && traverse(node.left)
-      visited.push(node.value)
-      node.right && traverse(node.right)
-    }
-
-    traverse(this.root) ///starts from root node,, can be changed this if you wanna start from some other node
-    return visited
   }
 }
 
-let bst = new BinarySearchTree()
-bst.insert(10)
-bst.insert(6)
-bst.insert(15)
-bst.insert(3)
-bst.insert(8)
-bst.insert(20)
+let queue = new PriorityQueue()
+queue.enqueue('common cold', 5)
+queue.enqueue('gunshot wound', 1)
+queue.enqueue('high fever', 4)
+queue.enqueue('broken arm', 2)
+queue.enqueue('Cut in lleg', 3)
 
-//console.log(bst)
-console.log(bst.DFS_inOrder())
+console.log(queue.dequeue())
+// console.log(queue)
