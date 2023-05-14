@@ -1609,87 +1609,384 @@
 // console.log(heap.values)
 
 //////////////////////////////////////////////////Priority Queue///////////////////////////////////////////////////////////
-class Node {
-  constructor(val, priority) {
-    this.val = val
-    this.priority = priority
-  }
-}
+// class Node {
+//   constructor(val, priority) {
+//     this.val = val
+//     this.priority = priority
+//   }
+// }
+// class PriorityQueue {
+//   constructor() {
+//     this.values = []
+//   }
+
+//   enqueue(val, priority) {
+//     let newNode = new Node(val, priority)
+//     this.values.push(newNode)
+//     this.bubbleUp()
+//   }
+
+//   bubbleUp() {
+//     let index = this.values.length - 1
+//     const element = this.values[index]
+
+//     while (index > 0) {
+//       let parentIndex = Math.floor((index - 1) / 2)
+//       let parent = this.values[parentIndex]
+
+//       if (element.priority >= parent.priority) break
+//       this.values[parentIndex] = element
+//       this.values[index] = parent
+//       index = parentIndex
+//     }
+//   }
+
+//   dequeue() {
+//     const min = this.values[0]
+//     const end = this.values.pop()
+//     if (this.values.length > 0) {
+//       this.values[0] = end
+//       this.sinkDown()
+//     }
+//     return min
+//   }
+
+//   sinkDown() {
+//     let idx = 0
+//     const length = this.values.length
+//     const element = this.values[0]
+
+//     while (true) {
+//       let leftChildIdx = 2 * idx + 1
+//       let rightChildIdx = 2 * idx + 2
+//       let leftChild, rightChild
+//       let swap = null
+
+//       if (leftChildIdx < length) {
+//         leftChild = this.values[leftChildIdx]
+//         if (leftChild.priority < element.priority) swap = leftChildIdx
+//       }
+
+//       if (rightChildIdx < length) {
+//         rightChild = this.values[rightChildIdx]
+//         if (
+//           (swap === null && rightChild.priority < element.priority) ||
+//           (swap !== null && rightChild.priority < leftChild.priority)
+//         )
+//           swap = rightChildIdx
+//       }
+
+//       if (swap === null) break
+//       this.values[idx] = this.values[swap]
+//       this.values[swap] = element
+//       idx = swap
+//     }
+//   }
+// }
+
+// let queue = new PriorityQueue()
+// queue.enqueue('common cold', 5)
+// queue.enqueue('gunshot wound', 1)
+// queue.enqueue('high fever', 4)
+// queue.enqueue('broken arm', 2)
+// queue.enqueue('Cut in lleg', 3)
+
+// console.log(queue.dequeue())
+// // console.log(queue)
+
+/////////////////////////////////////////////////////Hash Table (Map)///////////////////////////////////////////////////////////////
+
+// class HashTable {
+//   constructor(size = 53) {
+//     //53 is a prime number
+//     this.keyMap = new Array(size);
+//   }
+
+//   _hash(key) {
+//     let total = 0;
+//     let WEIRD_PRIME = 31;
+//     for (let i = 0; i < Math.min(key.length, 100); i++) {
+//       let char = key[i];
+//       let value = char.charCodeAt(0) - 96;
+//       total = (total * WEIRD_PRIME + value) % this.keyMap.length;
+//     }
+//     return total;
+//   }
+
+//   set(key, value) {
+//     let index = this._hash(key);
+//     if (!this.keyMap[index]) {
+//       this.keyMap[index] = [];
+//     }
+//     this.keyMap[index].push([key, value]);
+//   }
+
+//   get(key) {
+//     let index = this._hash(key);
+//     if (this.keyMap[index]) {
+//       for (const keyMap of this.keyMap[index]) {
+//         if (key === keyMap[0]) {
+//           return keyMap[1];
+//         }
+//       }
+//     }
+//     return undefined;
+//   }
+
+//   values() {
+//     let valuesArr = [];
+//     for (const keyMap of this.keyMap) {
+//       if (keyMap) {
+//         for (const value of keyMap) {
+//           valuesArr.push(value[1]);
+//         }
+//       }
+//     }
+//     return [...new Set(valuesArr)];
+//   }
+
+//   keys() {
+//     let keysArr = [];
+//     for (const keyMap of this.keyMap) {
+//       if (keyMap) {
+//         for (const key of keyMap) {
+//           keysArr.push(key[0]);
+//         }
+//       }
+//     }
+//     return [...new Set(keysArr)];
+//   }
+// }
+
+// let ht = new HashTable(17);
+// ht.set("maroon", "#800000");
+// ht.set("yellow", "#FFFF00");
+// ht.set("olive", "#8080000");
+// ht.set("salmon", "#FA8072");
+// ht.set("mediumvioletred", "#C71585");
+// ht.set("plum", "#DDA0DD");
+// ht.set("purple", "#DDA0DD");
+// ht.set("violet", "#DDA0DD");
+// ht.set("violet", "dsdsf");
+
+// console.log(ht.get("plum"));
+
+// console.log(ht.values());
+// console.log(ht.keys());
+
+///////////////////////////////////////////////////////Graph////////////////////////////////////////////////////////////////////
+
+// class Graph {
+//   constructor() {
+//     this.adjacencyList = {};
+//   }
+
+//   addVertex(vertex) {
+//     if (!this.adjacencyList[vertex]) this.adjacencyList[vertex] = [];
+//   }
+
+//   addEdge(v1, v2) {
+//     this.adjacencyList[v1].push(v2); //You could add error handling ...........
+//     this.adjacencyList[v2].push(v1); //This line is not required if its a directed graph
+//   }
+
+//   removeEdge(v1, v2) {
+//     this.adjacencyList[v1] = this.adjacencyList[v1].filter((v) => v !== v2);
+//     this.adjacencyList[v2] = this.adjacencyList[v2].filter((v) => v !== v1);
+//   }
+
+//   removeVertex(vertex) {
+//     while (this.adjacencyList[vertex].length) {
+//       this.removeEdge(vertex, this.adjacencyList[vertex].pop());
+//     }
+//     delete this.adjacencyList[vertex];
+//   }
+
+//   depthFirstRecursive(start) {
+//     const result = [];
+//     const visited = {};
+//     const adjacencyList = this.adjacencyList;
+
+//     (function dfs(vertex) {
+//       if (!vertex) return null;
+//       visited[vertex] = true;
+//       result.push(vertex);
+//       adjacencyList[vertex].forEach((neighbor) => {
+//         if (!visited[neighbor]) {
+//           return dfs(neighbor);
+//         }
+//       });
+//     })(start);
+//     return result;
+//   }
+
+//   depthFirstIterative(start) {
+//     const stack = [start];
+//     const result = [];
+//     const visited = {};
+//     let currentVertex;
+
+//     visited[start] = true;
+
+//     while (stack.length) {
+//       currentVertex = stack.pop();
+//       result.push(currentVertex);
+
+//       this.adjacencyList[currentVertex].forEach((neighbor) => {
+//         if (!visited[neighbor]) {
+//           visited[neighbor] = true;
+//           stack.push(neighbor);
+//         }
+//       });
+//     }
+//     return result;
+//   }
+
+//   breadthFirstIterative(start) {
+//     const queue = [start];
+//     const result = [];
+//     const visited = {};
+//     let currentVertex;
+//     visited[start] = true;
+
+//     while (queue.length) {
+//       currentVertex = queue.shift();
+//       result.push(currentVertex);
+
+//       // this.adjacencyList[currentVertex].forEach((neighbor) => {
+//       this.adjacencyList[currentVertex]
+//         .slice()
+//         .reverse()
+//         .forEach((neighbor) => {
+//           if (!visited[neighbor]) {
+//             visited[neighbor] = true;
+//             queue.push(neighbor);
+//           }
+//         });
+//     }
+//     return result;
+//   }
+// }
+
+// // let graph = new Graph();
+// // graph.addVertex("Berlin");
+// // graph.addVertex("Oslo");
+// // graph.addVertex("Tokyo");
+// // graph.addVertex("Amsterdam");
+
+// // graph.addEdge("Berlin", "Amsterdam");
+// // console.log(graph);
+
+// let g = new Graph();
+
+// g.addVertex("A");
+// g.addVertex("B");
+// g.addVertex("C");
+// g.addVertex("D");
+// g.addVertex("E");
+// g.addVertex("F");
+
+// g.addEdge("A", "B");
+// g.addEdge("A", "C");
+// g.addEdge("B", "D");
+// g.addEdge("C", "E");
+// g.addEdge("D", "E");
+// g.addEdge("D", "F");
+// g.addEdge("E", "F");
+// // console.log(g.depthFirstRecursive("A"));
+// // console.log(g.depthFirstIterative("A"));
+// console.log(g.breadthFirstIterative("A"));
+
+/////////////////////////////////////////////////Dijkstra's Algorithm//////////////////////////////////////////////////////////////
 class PriorityQueue {
   constructor() {
-    this.values = []
+    this.values = [];
   }
-
   enqueue(val, priority) {
-    let newNode = new Node(val, priority)
-    this.values.push(newNode)
-    this.bubbleUp()
+    this.values.push({ val, priority });
+    this.sort();
   }
-
-  bubbleUp() {
-    let index = this.values.length - 1
-    const element = this.values[index]
-
-    while (index > 0) {
-      let parentIndex = Math.floor((index - 1) / 2)
-      let parent = this.values[parentIndex]
-
-      if (element.priority >= parent.priority) break
-      this.values[parentIndex] = element
-      this.values[index] = parent
-      index = parentIndex
-    }
-  }
-
   dequeue() {
-    const min = this.values[0]
-    const end = this.values.pop()
-    if (this.values.length > 0) {
-      this.values[0] = end
-      this.sinkDown()
-    }
-    return min
+    return this.values.shift();
   }
-
-  sinkDown() {
-    let idx = 0
-    const length = this.values.length
-    const element = this.values[0]
-
-    while (true) {
-      let leftChildIdx = 2 * idx + 1
-      let rightChildIdx = 2 * idx + 2
-      let leftChild, rightChild
-      let swap = null
-
-      if (leftChildIdx < length) {
-        leftChild = this.values[leftChildIdx]
-        if (leftChild.priority < element.priority) swap = leftChildIdx
-      }
-
-      if (rightChildIdx < length) {
-        rightChild = this.values[rightChildIdx]
-        if (
-          (swap === null && rightChild.priority < element.priority) ||
-          (swap !== null && rightChild.priority < leftChild.priority)
-        )
-          swap = rightChildIdx
-      }
-
-      if (swap === null) break
-      this.values[idx] = this.values[swap]
-      this.values[swap] = element
-      idx = swap
-    }
+  sort() {
+    this.values.sort((a, b) => a.priority - b.priority);
   }
 }
 
-let queue = new PriorityQueue()
-queue.enqueue('common cold', 5)
-queue.enqueue('gunshot wound', 1)
-queue.enqueue('high fever', 4)
-queue.enqueue('broken arm', 2)
-queue.enqueue('Cut in lleg', 3)
+class WeightedGraph {
+  constructor() {
+    this.adjacencyList = {};
+  }
 
-console.log(queue.dequeue())
-// console.log(queue)
+  addVertex(vertex) {
+    if (!this.adjacencyList[vertex]) this.adjacencyList[vertex] = [];
+  }
+
+  addEdge(vertex1, vertex2, weight) {
+    this.adjacencyList[vertex1].push({ node: vertex2, weight });
+    this.adjacencyList[vertex2].push({ node: vertex1, weight });
+  }
+
+  Dijkstra(start, finish) {
+    const nodes = new PriorityQueue();
+    const distances = {};
+    const previous = {};
+    let smallest;
+    let path = [];
+
+    // console.log(this.adjacencyList);
+
+    for (let vertex in this.adjacencyList) {
+      if (vertex === start) {
+        distances[vertex] = 0;
+        nodes.enqueue(vertex, 0);
+      } else {
+        distances[vertex] = Infinity;
+        nodes.enqueue(vertex, Infinity);
+      }
+      previous[vertex] = null;
+    }
+    //as long as there is something to visit
+    while (nodes.values.length) {
+      smallest = nodes.dequeue().val;
+      if (smallest === finish) {
+      }
+      if (smallest || distances[smallest] !== Infinity) {
+        for (let neighbor in this.adjacencyList[smallest]) {
+          //find neighboring node
+          let nextNode = this.adjacencyList[smallest][neighbor];
+          //calulate new distance to neighboring node
+          let candidate = distances[smallest] + nextNode.weight;
+          let nextNeighbor = nextNode.node;
+          if (candidate < distances[nextNeighbor]) {
+            distances[nextNeighbor] = candidate;
+            previous[nextNeighbor] = smallest;
+            nodes.enqueue(nextNeighbor, candidate);
+          }
+        }
+      }
+    }
+    // console.log(this.adjacencyList["A"]);
+    // console.log("############");
+  }
+}
+
+let graph = new WeightedGraph();
+graph.addVertex("A");
+graph.addVertex("B");
+graph.addVertex("C");
+graph.addVertex("D");
+graph.addVertex("E");
+graph.addVertex("F");
+
+graph.addEdge("A", "B", 4);
+graph.addEdge("A", "C", 2);
+graph.addEdge("B", "E", 3);
+graph.addEdge("C", "D", 2);
+graph.addEdge("C", "F", 4);
+graph.addEdge("D", "E", 3);
+graph.addEdge("D", "F", 1);
+graph.addEdge("E", "F", 1);
+
+graph.Dijkstra("A", "E");
