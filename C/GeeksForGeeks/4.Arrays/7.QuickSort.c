@@ -29,7 +29,7 @@ void quickSort(int arr[], int left, int right, int size)
   if(left < right)
   {
     int pivotIndex = pivot(arr, left, size);
-    quickSort(arr, left, pivotIndex-1, size);
+    quickSort(arr, left, pivotIndex-1, pivotIndex);
     quickSort(arr, pivotIndex+1, right, size);
   }
 }

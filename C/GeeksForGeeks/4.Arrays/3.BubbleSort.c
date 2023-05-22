@@ -9,17 +9,17 @@ void swap(int *x, int *y)
 
 void bubbleSort(int arr[], int size)
 {
-  int noSwap = 1;
+  int noSwap;
   for(int i=size-1; i>1; i--)
   {
+    noSwap = 1;
     for(int j=0; j<i; j++)
     {
       if(arr[j] > arr[j+1])
         swap(&arr[j], &arr[j+1]);
         noSwap = 0;
     }
-    if(noSwap)
-      break;
+    if(noSwap) break;
   }
 }
 
