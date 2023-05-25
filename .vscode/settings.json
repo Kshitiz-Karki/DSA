@@ -1,5 +1,8 @@
 {
   "files.associations": {
-    "limits": "c"
+    "limits": "c",
+    "string.h": "c",
+    "stdio.h": "c",
+    "ctype.h": "c"
   }
 }
