@@ -6,13 +6,16 @@ struct Node
 {
   int data;
   struct Node *next;
-}*head = NULL;
+};
 
 struct Node *tail = NULL;
-void create(int A[], int n)
+
+struct Node *create(int A[], int n)
 {
   int i;
-  struct Node *temp;
+  struct Node *temp = NULL;
+  struct Node *head = NULL;
+  
   head = (struct Node *) malloc(sizeof(struct Node));
   
   head->data = A[0];
@@ -29,6 +32,7 @@ void create(int A[], int n)
     tail->next = temp;
     tail = temp;
   }
+  return head;
 }
 
 void display(struct Node *p)
@@ -137,8 +141,9 @@ struct Node *LinearSearch_recursive(struct Node *p, int key)
   return LinearSearch_recursive(p->next, key);
 }
 
-struct Node *LinearSearch_moveToFirst(struct Node *p, int key)
+struct Node *LinearSearch_moveToFirst(struct Node **head, int key)
 {
+  struct Node *p = *head;
   struct Node *q=p;
   while(p)
   {
@@ -147,8 +152,8 @@ struct Node *LinearSearch_moveToFirst(struct Node *p, int key)
       if(p == q)
         return p;
       q->next = p->next;
-      p->next = head;
-      head = p;
+      p->next = *head;
+      *head = p;
       return p;
     }
     q=p;
@@ -157,8 +162,10 @@ struct Node *LinearSearch_moveToFirst(struct Node *p, int key)
   return NULL;
 }
 
-void insertNode(struct Node *p, int index, int data)
+void insertNode(struct Node **head, int index, int data)
 {
+  struct Node *p = *head;
+
   if(index < 0 || index > count(p))
     return;
   
@@ -167,8 +174,8 @@ void insertNode(struct Node *p, int index, int data)
 
   if(index == 0)
   {
-    temp->next = head;
-    head = temp;
+    temp->next = *head;
+    *head = temp;
   }
   else
   {
@@ -180,14 +187,14 @@ void insertNode(struct Node *p, int index, int data)
 
 }
 
-void insertAtLast(int data)
+void insertAtLast(int data, struct Node **head)
 {
   struct Node *temp = (struct Node *) malloc(sizeof(struct Node));
   temp->data = data;
   temp->next = NULL;
 
-  if(head == NULL)
-    head = tail = temp;
+  if(*head == NULL)
+    *head = tail = temp;
   else
   {
     tail->next = temp;
@@ -195,15 +202,16 @@ void insertAtLast(int data)
   }
 }
 
-void insertSorted(struct Node *p, int data)
+void insertSorted(struct Node **head, int data)
 {
+  struct Node *p = *head;
   struct Node *temp, *q = NULL;
   temp = (struct Node *) malloc(sizeof(struct Node *));
   temp->data = data;
   temp->next = NULL;
 
-  if(head == NULL)
-    head = temp;
+  if(*head == NULL)
+    *head = temp;
   else
   {
     while(p && p->data < data)
@@ -211,10 +219,10 @@ void insertSorted(struct Node *p, int data)
       q=p;
       p=p->next;
     }
-      if(head == p)
+      if(*head == p)
       {
         temp->next = p;
-        head = temp;
+        *head = temp;
       }
       else
       {
@@ -224,8 +232,9 @@ void insertSorted(struct Node *p, int data)
   }
 }
 
-int deleteNode(struct Node *p, int index)
+int deleteNode(struct Node **head, int index)
 {
+  struct Node *p = *head;
   if(index < 1 || index > count(p))
     return -1;
   
@@ -234,8 +243,8 @@ int deleteNode(struct Node *p, int index)
 
   if(index == 1)
   {
-    q=head;
-    head = p->next;
+    q=*head;
+    *head = p->next;
     x = p->data;
     free(q);
     return x;
@@ -267,11 +276,107 @@ int isSorted(struct Node *p)
   return 1;
 }
 
+void removeDuplicatesSorted(struct Node *p)
+{
+  struct Node *q = p->next;
+
+  while(q)
+  {
+    if(p->data != q->data)
+    {
+      p = q;
+      q = q->next;
+    }
+    else
+    {
+      p->next = q->next;
+      free(q);
+      q=p->next;
+    }
+  }
+}
+
+void reverse(struct Node **head)
+{
+  struct Node *r, *q = NULL;
+  struct Node *p = *head;
+  while(p)
+  {
+    r=q;
+    q=p;
+    p=p->next;
+    q->next = r;
+  }
+  tail = *head;
+  *head = q;
+}
+
+void reverse_recursive(struct Node * q, struct Node *p, struct Node **head)
+{
+  if(p)
+  {
+    reverse_recursive(p, p->next, &(*head));
+    p->next = q;
+  }
+  else
+  {
+    tail = *head;
+    *head = q;
+  }
+}
+
+void concatenate(struct Node *first, struct Node *second, struct Node **third)
+{
+  *third = first;
+  
+  while(first->next)
+    first=first->next;
+  
+  first->next = second;
+}
+
+void merge(struct Node *p, struct Node *q, struct Node **third)
+{
+  struct Node *tail = NULL;
+  if(p->data < q->data)
+  {
+    *third = tail = p;
+    p=p->next;
+    (*third)->next = NULL;
+  }
+  else
+  {
+    *third = tail = q;
+    q=q->next;
+    (*third)->next = NULL;
+  }
+
+  while(p && q)
+  {
+    if(p->data < q->data)
+    {
+      tail->next = p;
+      tail = p;
+      p=p->next;
+      tail->next = NULL;
+    }
+    else
+    {
+       tail->next = q;
+      tail = q;
+      q=q->next;
+      tail->next = NULL;
+    }
+  }
+
+  if(p) tail->next = p;
+  if(q) tail->next = q;
+}
+
 int main (void)
 {
-  int A[] = {3,5,17,-10,15};
-  create(A, 5);
-
+  // int A[] = {3,5,17,-10,15};
+  // struct Node *head =  create(A, 5);
   // display(head);
 
   // display_recursive(head);
@@ -281,56 +386,83 @@ int main (void)
   // printf("Sum - %d\n", sum_recursive(head));
   // printf("Maximum node data = %d\n", maximumNode(head));
 
-  // struct Node *temp = LinearSearch(head, -60);
-  // struct Node *temp = LinearSearch_recursive(head, -30);
+  // struct Node *temp = LinearSearch(head, -10);
+  // struct Node *temp = LinearSearch_recursive(head, -10);
 
   // struct Node *temp = NULL;
-  // temp = LinearSearch_moveToFirst(head, 17);
-  // temp = LinearSearch_moveToFirst(head, 5);
-  // temp = LinearSearch_moveToFirst(head, 5);
+  // temp = LinearSearch_moveToFirst(&head, 17);
+  // temp = LinearSearch_moveToFirst(&head, 5);
+  // temp = LinearSearch_moveToFirst(&head, 5);
 
   // if(temp)
   //   printf("Key is found - %d\n", temp->data);
   // else
   //   printf("Key not found\n");
-
   // display(head);
 
-  // insertNode(head, 0, 55);
+  // insertNode(&head, 0, 55);
   // display(head);
-  // insertNode(head, 2, 65);
+  // insertNode(&head, 2, 65);
   // display(head);
-  // insertNode(head, 7, 100);
+  // insertNode(&head, 7, 100);
   // display(head);
-  // insertNode(head, 9, 400);
+  // insertNode(&head, 9, 400);
   // display(head);
-  // insertNode(head, -9, 400);
-  // display(head);
-
-  // insertNode(head, 0, 55);
-  // insertNode(head, 1, 65);
-  // insertNode(head, 2, 75);
-  // insertNode(head, 3, 85);
-  // insertNode(head, 4, 95);
+  // insertNode(&head, -9, 400);
   // display(head);
 
-  // insertAtLast(10);
-  // insertAtLast(20);
-  // insertAtLast(30);
+  // struct Node *head = NULL;
+  // insertNode(&head, 0, 55);
+  // insertNode(&head, 1, 65);
+  // insertNode(&head, 2, 75);
+  // insertNode(&head, 3, 85);
+  // insertNode(&head, 4, 95);
+  // display(head);
+
+  // struct Node *head = NULL;
+  // insertAtLast(10, &head);
+  // insertAtLast(20, &head);
+  // insertAtLast(30, &head);
   // display(head);
 
   // int A[] = {3,5,10,12,15};
-  // create(A, 5);
-  // insertSorted(head, 49);
-  // insertSorted(head, 40);
-  // insertSorted(head, 4);
+  // struct Node *head = create(A, 5);
+  // insertSorted(&head, 49);
+  // insertSorted(&head, 40);
+  // insertSorted(&head, 4);
   // display(head);
 
-  // printf("Deleted node with data - %d\n", deleteNode(head, 10));
+  // printf("Deleted node with data - %d\n", deleteNode(&head, 50));
   // display(head);
 
+  // int A[] = {3,5,10,12,15};
+  // struct Node *head = create(A, 5);
   // printf("Is sorted - %d\n", isSorted(head));
 
+  // int A[] = {5,5,5, 9};
+  // struct Node *head = create(A, 4);
+  // removeDuplicatesSorted(head);
+  // display(head);
+
+  // reverse(&head);
+  // reverse_recursive(NULL, head, &head);
+  // display(head);
+
+  // int A[] = {3,5,17,-10,15};
+  // struct Node *head1 =  create(A, 5);
+  // int B[] = {10,20,30,40,50};
+  // struct Node *head2 =  create(B, 5);
+  // struct Node *head3 = NULL;
+  // concatenate(head1, head2, &head3);
+  // display(head3);
+
+  int A[] = {10,20,30,40,50};
+  struct Node *head1 =  create(A, 5);
+  int B[] = {55,65,75,85,95};
+  struct Node *head2 =  create(B, 5);
+  struct Node *head3 = NULL;
+  merge(head1, head2, &head3);
+  display(head3);
 
   return 0;
 }
