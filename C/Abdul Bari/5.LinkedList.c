@@ -1,3 +1,5 @@
+// To add - Freeing heap memory
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -373,6 +375,20 @@ void merge(struct Node *p, struct Node *q, struct Node **third)
   if(q) tail->next = q;
 }
 
+int isLoop(struct Node *head)
+{
+  struct Node *p = head;
+  struct Node *q = head;
+
+  do{
+    q=q->next;
+    p=p->next;
+    p=p?p->next:p;
+  }
+  while(p && q && p!=q);
+  return p == q ? 1 : 0;
+}
+
 int main (void)
 {
   // int A[] = {3,5,17,-10,15};
@@ -456,13 +472,23 @@ int main (void)
   // concatenate(head1, head2, &head3);
   // display(head3);
 
-  int A[] = {10,20,30,40,50};
-  struct Node *head1 =  create(A, 5);
-  int B[] = {55,65,75,85,95};
-  struct Node *head2 =  create(B, 5);
-  struct Node *head3 = NULL;
-  merge(head1, head2, &head3);
-  display(head3);
+  // int A[] = {10,20,30,40,50};
+  // struct Node *head1 =  create(A, 5);
+  // int B[] = {55,65,75,85,95};
+  // struct Node *head2 =  create(B, 5);
+  // struct Node *head3 = NULL;
+  // merge(head1, head2, &head3);
+  // display(head3);
+
+  int A[] = {2,3,4,8,10};
+  struct Node *head = create(A, 5);
+  // struct Node *temp1 = head;
+  // struct Node *temp2 = head;
+  // temp1 = temp1->next->next;
+  // temp2 = temp2->next->next->next->next;
+  // temp2->next = temp1;
+
+  printf("Is loop - %d\n", isLoop(head));
 
   return 0;
 }
