@@ -33,6 +33,9 @@ struct Node *create(int A[], int n)
 
 void display(struct Node *p)
 {
+  if(!p)
+    return;
+  
   struct Node *head = p;
   do
   {
@@ -69,11 +72,95 @@ void freeList(struct Node* head, int n)
   }
 }
 
+void insertNode(struct Node **head, int pos, int data, int size)
+{
+  if(pos < 0 || pos > size)
+    return;
+  
+  struct Node *p = *head;
+  struct Node *temp = (struct Node *) malloc(sizeof(struct Node));
+  temp->data = data;
+
+  if(pos == 0)
+  {
+    if(p == NULL)
+    {
+      *head=temp;
+      (*head)->next = *head;
+    }
+    else
+    {
+      while(p->next != *head)
+        p=p->next;
+      temp->next = *head;
+      p->next = temp;
+      *head = temp;
+    }
+  }
+  else
+  {
+    for(int i=1; i<=pos-1; i++)
+      p=p->next;
+    temp->next = p->next;
+    p->next = temp;
+  }
+}
+
+int deleteNode(struct Node **head, int pos, int size)
+{
+  if(pos < 0 || pos >= size || size == 0)
+    return -1;
+  
+  int data;
+  struct Node *p = *head;
+
+  if(pos == 0)
+  {
+    struct Node *currHead = *head;
+    while(p->next != currHead)
+      p=p->next;
+    
+    if(p = currHead)
+    {
+      data = currHead->data;
+      free(currHead);
+      *head = NULL;
+    }
+    else
+    {
+      p->next = currHead->next;
+      data = currHead->data;
+      free(currHead);
+      *head = p->next;
+    }
+  }
+  else
+  {
+    for(int i=0; i<pos-1; i++)
+      p=p->next;
+    struct Node *nextNode = p->next;
+    p->next = nextNode->next;
+    data = nextNode->data;
+    free(nextNode);
+  }
+  return data;
+}
+
 int main (void)
 {
-  int A[] = {1,2,3,4,5};
-  struct Node *head = create(A, 5);
-  display_recursive(head, head);
-  freeList(head, 5);
+  int n;
+  // int A[] = {1,2,3,4,5};
+  int A[] = {1};
+  n = sizeof(A)/sizeof(int);
+  struct Node *head = create(A, n);
+  // struct Node *head = NULL;
+  if(!head)
+    n = 0;
+  // insertNode(&head, 0, 100, n);
+  // display(head);
+  // freeList(head, n+1);
+  printf("Deleted node is %d\n", deleteNode(&head, 0, n));
+  display(head);
+  freeList(head, n-1);
   return 0;
 } 

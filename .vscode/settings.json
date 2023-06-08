@@ -7,6 +7,9 @@
     "typeinfo": "c",
     "math.h": "c",
     "cstdlib": "c",
-    "stdlib.h": "c"
+    "stdlib.h": "c",
+    "array": "c",
+    "string_view": "c",
+    "initializer_list": "c"
   }
 }
