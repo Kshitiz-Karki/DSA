@@ -12,6 +12,7 @@
     "string_view": "c",
     "initializer_list": "c",
     "deque": "c",
-    "vector": "c"
+    "vector": "c",
+    "queue.h": "c"
   }
 }

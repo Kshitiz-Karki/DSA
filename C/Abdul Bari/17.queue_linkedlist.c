@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+struct Queue
+{
+  struct Node *front;
+  struct Node *rear;
+};
+
 struct Node
 {
   int data;
@@ -69,22 +75,49 @@ void freeList(struct Node *front)
 
 int main (void)
 {
-  struct Node *front1 = NULL;
-  struct Node *rear1 = NULL;
+  struct Queue q1;
+  q1.front=NULL;
+  q1.rear=NULL;
 
-  enqueue(&front1, &rear1, 1) ;
-  enqueue(&front1, &rear1, 2) ;
-  enqueue(&front1, &rear1, 3) ;
-  enqueue(&front1, &rear1, 4) ;
-  enqueue(&front1, &rear1, 5) ;
+  struct Queue q2;
+  q2.front=NULL;
+  q2.rear=NULL;
 
-  display(front1);
+  // struct Node *front1 = NULL;
+  // struct Node *rear1 = NULL;
 
-  printf("%d was dequeued\n", dequeue(&front1));
-  printf("%d was dequeued\n", dequeue(&front1));
+  enqueue(&q1.front, &q1.rear, 1) ;
+  enqueue(&q1.front, &q1.rear, 2) ;
+  enqueue(&q1.front, &q1.rear, 3) ;
+  enqueue(&q1.front, &q1.rear, 4) ;
+  enqueue(&q1.front, &q1.rear, 5) ;
 
-  display(front1);
+  display(q1.front);
 
-  freeList(front1);
+  printf("%d was dequeued\n", dequeue(&q1.front));
+  printf("%d was dequeued\n", dequeue(&q1.front));
+
+  display(q1.front);
+
+  freeList(q1.front);
+
+  printf("##########################\n");
+
+  enqueue(&q2.front, &q2.rear, 10) ;
+  enqueue(&q2.front, &q2.rear, 11) ;
+  enqueue(&q2.front, &q2.rear, 12) ;
+  enqueue(&q2.front, &q2.rear, 13) ;
+  enqueue(&q2.front, &q2.rear, 14) ;
+
+  display(q2.front);
+
+  printf("%d was dequeued\n", dequeue(&q2.front));
+  printf("%d was dequeued\n", dequeue(&q2.front));
+
+  display(q2.front);
+
+  freeList(q2.front);
+
+
   return 0;
 }
