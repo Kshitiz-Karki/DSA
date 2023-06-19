@@ -13,6 +13,11 @@
     "initializer_list": "c",
     "deque": "c",
     "vector": "c",
-    "queue.h": "c"
+    "queue.h": "c",
+    "numeric": "c",
+    "random": "c",
+    "compare": "c",
+    "cstdint": "c",
+    "stdint.h": "c"
   }
 }

@@ -168,6 +168,49 @@ void LevelOrderTraversal(struct Node *p, struct Queue *queue)
   *queue = q;
 }
 
+int countNodes(struct Node *root)
+{
+  if(root)
+    return countNodes(root->lchild) + countNodes(root->rchild) + 1;
+  return 0;
+}
+
+int tree_height(struct Node *root)
+{
+  if(!root)
+    return 0;
+  int x=0;
+  int y=0;
+  x=tree_height(root->lchild);
+  y=tree_height(root->rchild);
+  if(x>y)
+    return x+1;
+  else
+    return y+1;
+}
+
+int sum_nodes(struct Node *root)
+{
+  if(root)
+    return sum_nodes(root->lchild) + sum_nodes(root->rchild) + root->data;
+  return 0;
+}
+
+int second_degree_nodes_count(struct Node *root)
+{
+  int x=0, y=0;
+  if(root)
+  {
+    x=second_degree_nodes_count(root->lchild);
+    y=second_degree_nodes_count(root->rchild);
+    if(root->lchild && root->rchild)
+      return x+y+1;
+    else
+      return x+y;
+  }
+  return 0;
+}
+
 int main(void)
 {
   struct Queue q1 ;
@@ -205,6 +248,12 @@ int main(void)
   struct Queue q2;
   LevelOrderTraversal(q1.root, &q2);
   printf("\n");
+
+  printf("Number of nodes - %d\n", countNodes(q1.root));
+  printf("Tree height - %d\n", tree_height(q1.root));
+  printf("Sum of nodes - %d\n", sum_nodes(q1.root));
+  printf("second_degree_nodes_count - %d\n", second_degree_nodes_count(q1.root));
+
   free(q2.Q);
 
   freeList(&q1.root);
