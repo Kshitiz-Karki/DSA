@@ -1,11 +1,10 @@
+//Has a bug as seen while freeing stack.
+
 #include <stdio.h>
 #include "Stack.h"
 
-
-
-struct bst_node *create_BST_preorder(int preorder[], int size)
+struct bst_node *create_BST_preorder(struct Node *stack, int preorder[], int size)
 {
-  struct Node *stack = NULL;
   struct bst_node *t = NULL;
   int i=0;
   struct bst_node *root = (struct bst_node *)malloc(sizeof(struct bst_node));
@@ -64,9 +63,12 @@ void free_tree(struct bst_node *root)
 
 int main(void)
 {
+  struct Node *stack = create_stack();
   int preorder[] = {30, 20, 10, 15, 25, 40, 50, 45};
-  struct bst_node *root = create_BST_preorder(preorder, 8);
+  struct bst_node *root = create_BST_preorder(stack, preorder, 8);
   inorder_traversal(root);
+  printf("\n");
   free_tree(root);
+  // free_stack(stack);// freeing stack gives error, plz help in fixing this bug
   return 0;
 }

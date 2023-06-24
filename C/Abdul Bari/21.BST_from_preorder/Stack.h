@@ -18,13 +18,13 @@ struct Node
   struct Node *next;
 };
 
-// struct Node *create_stack(int data)
-// {
-//   struct Node *stack = (struct Node *)malloc(sizeof(struct Node));
-//   stack->data = data;
-//   stack->next = NULL;
-//   return stack;
-// }
+struct Node *create_stack()
+{
+  struct Node *stack = (struct Node *)malloc(sizeof(struct Node));
+  stack->data = NULL;
+  stack->next = NULL;
+  return stack;
+}
 
 void push(struct Node **p, struct bst_node *data)
 {
@@ -45,7 +45,10 @@ struct bst_node *pop(struct Node **top)
   struct bst_node *x = NULL;
   struct Node *p = *top;
   if(p == NULL)
-    printf("Stack is empty.\n");
+  {
+    // printf("Stack is empty.\n");
+    return NULL;
+  }
   else
   {
     *top = p->next;
@@ -55,17 +58,7 @@ struct bst_node *pop(struct Node **top)
   return x;
 }
 
-void display(struct Node *p)
-{
-  while(p)
-  {
-    printf("%d ", p->data);
-    p=p->next;
-  }
-  printf("\n");
-}
-
-void freeList(struct Node *top)
+void free_stack(struct Node *top)
 {
   struct Node *temp  = NULL;
   while(top)
@@ -76,18 +69,4 @@ void freeList(struct Node *top)
   }
 }
 
-// int main (void)
-// {
-//   struct Node *stk = NULL;
-//   push(&stk, 5);
-//   push(&stk, 10);
-//   push(&stk, 20);
-//   push(&stk, 30);
-//   display(stk);
-  
-//   printf("Popped element is %d\n", pop(&stk));
-//   display(stk);
-//   freeList(stk);
-//   return 0;
-// }
 #endif
