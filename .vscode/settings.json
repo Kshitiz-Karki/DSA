@@ -19,6 +19,7 @@
     "compare": "c",
     "cstdint": "c",
     "stdint.h": "c",
-    "string": "c"
+    "string": "c",
+    "time.h": "c"
   }
 }
