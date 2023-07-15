@@ -20,6 +20,8 @@
     "cstdint": "c",
     "stdint.h": "c",
     "string": "c",
-    "time.h": "c"
+    "time.h": "c",
+    "*.tcc": "c",
+    "type_traits": "c"
   }
 }
