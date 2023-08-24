@@ -3,6 +3,9 @@
     "iostream": "cpp",
     "string_view": "cpp",
     "ostream": "cpp",
-    "stdlib.h": "c"
+    "stdlib.h": "c",
+    "cmath": "c",
+    "limits": "c",
+    "type_traits": "c"
   }
 }
