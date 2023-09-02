@@ -6,6 +6,7 @@
     "stdlib.h": "c",
     "cmath": "c",
     "limits": "c",
-    "type_traits": "c"
+    "type_traits": "c",
+    "stdint.h": "c"
   }
 }
